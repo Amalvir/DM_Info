@@ -32,7 +32,7 @@ def cv_rectangles(a, b, f, n):
     # N contient tous les entiers compris entre 1 et n
     N = [k for k in range (1, n + 1)]
     
-    plt.plot(N, R, '.', color = 'blue', label = 'Rectangle')
+    plt.plot(N, R, '.', color='blue', label='Rectangle')
     return None
 
 
