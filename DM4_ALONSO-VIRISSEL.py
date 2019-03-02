@@ -5,32 +5,32 @@ import matplotlib.pyplot as plt
 
 
 def dv(t):
-    """v sans l'intégral en fonction de t"""
+    """La fonction f telle que v est l'intégral de f entre 0 et 4."""
     return cos(pi*t/8)
 
 
 ## Rectangle
 def rectangles(a, b, f, n):
     """Retourne le calcul approché de l'intégrale de f de a à b par la méthode des
-    rectangles avec un pas de n"""
+    rectangles avec un pas de n > 0"""
     Rn = 0
     for i in range(n):
         ai = a + i*(b - a)/n
         Rn = Rn + f(ai)
     return ((b - a)/n)*Rn
 
-# 2. n = 100    2.5664267293774436
-#    n = 10000  2.5466790842343427
+# 2. n = 10**2  2.5664267293774436
+#    n = 10**4  2.5466790842343427
 #    n = 10**6  2.5464810894698378
 
 
 def cv_rectangles(a, b, f, n):
-    """Plot les valeurs de Rn en fonction du pas k variant de 1 à n."""
-    # R contient les valeurs de Rk pour où k est le pas variant de 1 à n
+    """Plot les valeurs de Rn en fonction du pas k variant de 1 à n > 0."""
+    # R contient les valeurs de Rk où k est le pas variant de 1 à n
     R = [rectangles(a, b, f, k) for k in range(1, n + 1)]
     
     # N contient tous les entiers compris entre 1 et n
-    N = [k for k in range (1, n + 1)]
+    N = [k for k in range(1, n + 1)]
     
     plt.plot(N, R, '.', color='blue', label='Rectangle')
     return None
@@ -39,12 +39,12 @@ def cv_rectangles(a, b, f, n):
 ## Trapèzes
 def trapezes(a, b, f, n):
     """Retourne le calcul approché de l'intégrale de f de a à b par la méthode des
-    trapèzes avec un pas de n"""
+    trapèzes avec un pas de n > 0"""
     Tn = 0
     for i in range(1, n):
         ai = a + i*(b - a)/n
         Tn = Tn + f(ai)
-    return ((b - a)/n)*((f(a) + f(b))/2 + Tn)
+    return (b - a)/n * ((f(a) + f(b))/2 + Tn)
 
 # 2. n = 100    2.546426729377443
 #    n = 10000  2.5464790842343428
@@ -52,8 +52,8 @@ def trapezes(a, b, f, n):
 
 
 def cv_trapezes(a, b, f, n):
-    """Plot les valeurs de Tn en fonction du pas k variant de 1 à n."""
-    # T contient les valeurs de Tk pour où k est le pas variant de 1 à n
+    """Plot les valeurs de Tn en fonction du pas k variant de 1 à n > 0."""
+    # T contient les valeurs de Tk où k est le pas variant de 1 à n
     T = [trapezes(a, b, f, k) for k in range(1, n + 1)]
     
     # N contient tous les entiers compris entre 1 et n
@@ -74,7 +74,7 @@ def simpson(a, b, f, n):
         ai_1 = a + (i - 1)*(b - a)/n
         ai = a + i*(b - a)/n
         Sn = Sn + f(ai_1) + 4*f((ai_1 + ai)/2) + f(ai)
-    return ((b - a)/(6*n))*Sn
+    return (b - a)/(6*n)*Sn
 
 # 2. n = 100    2.5464790895241523
 #    n = 10000  2.546479089470363
@@ -82,12 +82,12 @@ def simpson(a, b, f, n):
 
 
 def cv_simpson(a, b, f, n):
-    """Plot les valeurs de Sn en fonction du pas k variant de 1 à n."""
-    # S contient les valeurs de Sk pour où k est le pas variant de 1 à n
+    """Plot les valeurs de Sn en fonction du pas k variant de 1 à n > 0."""
+    # S contient les valeurs de Sk où k est le pas variant de 1 à n
     S = [simpson(a, b, f, k) for k in range(1, n + 1)]
     
     # N contient tous les entiers compris entre 1 et n
-    N = [k for k in range (1, n + 1)]
+    N = [k for k in range(1, n + 1)]
     
     plt.plot(N, S, '.', color='green', label='Simpson')
     return None
@@ -107,4 +107,7 @@ def main():
 main()
 # La méthode de Simpson converge la plus vite vers la valeur finale. Elle est la
 # plus efficace.
-# La méthode des trapèzes 
+# La méthode des trapèzes converge moins vite et la méthode des rectangles beaucoup moins vite.
+# Mais ces dernières sont plus rapide d'éxécution.
+# En conclusion, la méthode Simpson est plus efficace car peut fournir des résultats précis
+# avec un pas bien plus faible.
