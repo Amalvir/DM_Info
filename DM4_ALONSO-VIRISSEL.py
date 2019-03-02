@@ -111,3 +111,5 @@ main()
 # Mais ces dernières sont plus rapide d'éxécution.
 # En conclusion, la méthode Simpson est plus efficace car peut fournir des résultats précis
 # avec un pas bien plus faible.
+#
+# PS : L'échelle log permet de mieux se rendre compte des différence.
