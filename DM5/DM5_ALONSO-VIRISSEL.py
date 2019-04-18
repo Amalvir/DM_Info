@@ -3,12 +3,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Constante :
+## Constante :
 
 alpha = -30
 y0 = 10
 
-# A.1
+## A.1
 
 def Solution(t):
     return np.exp(alpha*t)
@@ -30,16 +30,13 @@ def EulerExplicite(F, a, b, y0, h):
         les_y.append(y)
     return les_t, les_y
 
-
-
-# A.1
 X1 = np.linspace(0, 5, 200)
 Y1 = [Solution(t) for t in X1]
 plt.figure("figure_A1.pdf")
 plt.plot(X1, Y1)
 plt.savefig("figure_A1.pdf")
 
-# A.2
+## A.2
 plt.figure("figure_A2.pdf")
 
 # Comme c'est pas noté, petite entorce à la consigne pour que ce soit plus clair (il y a plus de graphique que demander)
@@ -54,3 +51,14 @@ plt.savefig("figure_A2.pdf")
 
 # On remarque l'apparition d'une sinusoide. En diminuant le pas la sinusoide évolue; elle se retrouve au début puis
 # disparait. (On remarque qu'elle est très jolie pour h = 0.07 !)
+
+## A.3
+
+# F(ytk, tk) = alpha*ytk
+# D'où, y(tk+1) = y(tk)*(1 + alpha*h) = -2*y(tk)
+# Dans le cas où alpha = -30 et h = 0,1; la suite {y(tk)} est une suite géométrique de raison négative. Par conséquent,
+# ses valeurs sont tantôt positive, tantôt négative ce qui conduit à cette divergence.
+
+## A.4
+
+
