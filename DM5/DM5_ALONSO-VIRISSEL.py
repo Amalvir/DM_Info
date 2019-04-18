@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.optimize import newton
 
 ## Constante :
 
@@ -87,4 +88,9 @@ plt.title("Pas = hmin + 0,01")
 
 plt.savefig("figure_A4.pdf")
 
+
+
+## B.1
+
+# newton(func, x0) renvoie une racine de func proche de x0
 
