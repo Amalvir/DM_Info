@@ -61,4 +61,30 @@ plt.savefig("figure_A2.pdf")
 
 ## A.4
 
+# Rappel : y(tk+1) = y(tk)*(1 - 30*h)
+# {y(tk)} converge vers 0 si 1 - 30*h > 0 i.e h < 1/30
+hmin = 1/30
+
+plt.figure("figure_A4.pdf")
+
+X2, Y2 = EulerExplicite(F, 0, 5, y0, hmin-0.01)
+plt.subplot(131)
+plt.plot(X2, Y2, label="pas = hmin - 0.01")
+plt.legend()
+plt.title("Pas = hmin - 0,01")
+
+X2, Y2 = EulerExplicite(F, 0, 5, y0, hmin)
+plt.subplot(132)
+plt.plot(X2, Y2, label="pas = hmin")
+plt.legend()
+plt.title("Pas = hmin")
+
+X2, Y2 = EulerExplicite(F, 0, 5, y0, hmin+0.01)
+plt.subplot(133)
+plt.plot(X2, Y2, label="pas = hmin + 0.01")
+plt.legend()
+plt.title("Pas = hmin + 0,01")
+
+plt.savefig("figure_A4.pdf")
+
 
