@@ -37,7 +37,7 @@ plt.plot(X1, Y1)
 plt.savefig("figure_A1.pdf")
 
 ## A.2
-plt.figure("figure_A2.pdf")
+plt.figure("figure_A2.pdf", figsize=[14.2, 8])
 
 # Comme c'est pas noté, petite entorce à la consigne pour que ce soit plus clair (il y a plus de graphique que demander)
 for i in range(10, 0, -1):
@@ -65,7 +65,7 @@ plt.savefig("figure_A2.pdf")
 # {y(tk)} converge vers 0 si 1 - 30*h > 0 i.e h < 1/30
 hmin = 1/30
 
-plt.figure("figure_A4.pdf")
+plt.figure("figure_A4.pdf", figsize=[14.2, 8])
 
 X2, Y2 = EulerExplicite(F, 0, 5, y0, hmin-0.01)
 plt.subplot(131)
