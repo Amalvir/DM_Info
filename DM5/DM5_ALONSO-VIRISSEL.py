@@ -31,21 +31,26 @@ def EulerExplicite(F, a, b, y0, h):
     return les_t, les_y
 
 
-def main():
-    # A.1
-    X1 = np.linspace(0, 5, 200)
-    Y1 = [Solution(t) for t in X1]
-    plt.figure("figure_A1.pdf")
-    plt.plot(X1, Y1)
-    plt.savefig("figure_A1.pdf")
 
-    # A.2
-    plt.figure("figure_A2.pdf")
-    for i in [-1, -2, -3]:
-        X2, Y2 = EulerExplicite(F, 0, 5, y0, 10**i)
-        plt.plot(X2, Y2, label="pas = "+str(10**i))
+# A.1
+X1 = np.linspace(0, 5, 200)
+Y1 = [Solution(t) for t in X1]
+plt.figure("figure_A1.pdf")
+plt.plot(X1, Y1)
+plt.savefig("figure_A1.pdf")
+
+# A.2
+plt.figure("figure_A2.pdf")
+
+# Comme c'est pas noté, petite entorce à la consigne pour que ce soit plus clair (il y a plus de graphique que demander)
+for i in range(10, 0, -1):
+    X2, Y2 = EulerExplicite(F, 0, 5, y0, i/100)
+    plt.subplot(2, 5, 11-i)
+    plt.plot(X2, Y2, label="pas = "+str(i/100))
+    plt.title("Pas = "+str(i/100))
     plt.legend()
-    plt.savefig("figure_A2.pdf")
 
-    #plt.show()
-main()
+plt.savefig("figure_A2.pdf")
+
+# On remarque l'apparition d'une sinusoide. En diminuant le pas la sinusoide évolue; elle se retrouve au début puis
+# disparait. (On remarque qu'elle est très jolie pour h = 0.07 !)
