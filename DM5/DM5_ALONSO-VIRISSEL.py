@@ -88,9 +88,20 @@ plt.title("Pas = hmin + 0,01")
 
 plt.savefig("figure_A4.pdf")
 
-
-
 ## B.1
 
-# newton(func, x0) renvoie une racine de func proche de x0
+# newton(func, x0) Résoue une équation du type func(x) = 0 par une méthode approchée de la méthode de Newton en partant
+# de x0
 
+
+def EulerImplicite(F, a, b, y0, h):
+    t = a
+    y = y0
+    les_t = [a]
+    les_y = [y0]
+    while t + h <= b:
+        y = newton(lambda y1: y1 - y - h*F(t, y1), y)
+        t = t + h
+        les_t.append(t)
+        les_y.append(y)
+    return les_t, les_y
