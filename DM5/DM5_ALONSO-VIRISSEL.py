@@ -12,7 +12,7 @@ y0 = 10
 ## A.1
 
 def Solution(t):
-    return np.exp(alpha*t)
+    return y0*np.exp(alpha*t)
 
 
 def F(t, y):
@@ -34,14 +34,14 @@ def EulerExplicite(F, a, b, y0, h):
 def A1():
     X = np.linspace(0, 5, 200)
     Y = [Solution(t) for t in X]
-    plt.figure("figure_A1.pdf")
+    plt.figure("figure_A1")
     plt.plot(X, Y)
     plt.savefig("figure_A1.pdf")
 
 ## A.2
 
 def A2():
-    plt.figure("figure_A2.pdf", figsize=[14.2, 8])
+    plt.figure("figure_A2", figsize=[14.2, 8])
     
     # Comme c'est pas noté, petite entorce à la consigne pour que ce soit plus clair (il y a plus de graphique que demander)
     for i in range(10, 0, -1):
@@ -70,7 +70,7 @@ def A2():
 hmin = 1/30
 
 def A4():
-    plt.figure("figure_A4.pdf", figsize=[14.2, 8])
+    plt.figure("figure_A4", figsize=[14.2, 8])
     
     X, Y = EulerExplicite(F, 0, 5, y0, hmin-0.01)
     plt.subplot(131)
@@ -115,7 +115,7 @@ def EulerImplicite(F, a, b, y0, h):
 ## B.2
 
 def B2():
-    plt.figure("figure_B2.pdf", figsize=[14.2, 8])
+    plt.figure("figure_B2", figsize=[14.2, 8])
 
 # Dure de faire quelque chose de clair cette fois vu qu'il n'y a que peu de difference
     for i in range(1, 11):
@@ -154,8 +154,19 @@ def Erreur(h, type):
 
 ## C.2
 
+def C2():
+    plt.figure("figure_C2")
+    les_h = np.linspace(1e-3, 1e-2, 10)
+    Expl = [Erreur(h, 'EulerExplicite') for h in les_h]
+    plt.plot(les_h, Expl, label="Euler Explicite")
+    Impl = [Erreur(h, 'EulerImplicite') for h in les_h]
+    plt.plot(les_h, Impl, label="Euler Implicite")
+
+    plt.legend()
+    plt.savefig("figure_C2.pdf")
 
 # A1()
 # A2()
 # A4()
 # B2()
+C2()
