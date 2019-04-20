@@ -92,6 +92,7 @@ def A4():
     
     plt.savefig("figure_A4.pdf")
 
+
 ## B.1
 
 # newton(func, x0) Résoue une équation du type func(x) = 0 par une méthode approchée de la méthode de Newton en partant
@@ -138,7 +139,23 @@ def B2():
 # poser problème. Seulement, dans le cas présent alpha est négatif et comme h ne peut être négatif, alpha*h ne peut être
 # égale à 1.
 
+
+## C.1
+
+def Erreur(h, type):
+    if type == "EulerExplicite":
+        les_tk, ynum = EulerExplicite(F, 0, 5, y0, h)
+    elif type == "EulerImplicite":
+        les_tk, ynum = EulerImplicite(F, 0, 5, y0, h)
+    else:
+        raise ValueError("'EulerExplicite' ou 'EulerImplicite' attendu")
+    yvrai = [Solution(t) for t in les_tk]
+    return np.max([np.abs(yvrai[k] - ynum[k]) for k in range(len(les_tk))])
+
+## C.2
+
+
 # A1()
 # A2()
 # A4()
-B2()
+# B2()
