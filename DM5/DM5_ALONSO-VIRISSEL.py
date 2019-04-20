@@ -165,8 +165,34 @@ def C2():
     plt.legend()
     plt.savefig("figure_C2.pdf")
 
+## C.3
+
+def EulerHeun(F, a, b, y0, h):
+    t = a
+    y = y0
+    les_t = [a]
+    les_y = [y0]
+    while t + h <= b:
+        yp = y + h*F(t, y)
+        y = y + h/2*(F(t, y) + F(t+h, yp))
+        t = t + h
+        les_t.append(t)
+        les_y.append(y)
+    return les_t, les_y
+
+def C3():
+    plt.figure("figure_C3")
+    X, Y = EulerHeun(F, 0, 5, y0, 0.01)
+    plt.plot(X, Y)
+    plt.title("Résolution par la méthode de Heun")
+    plt.savefig("figure_C3.pdf")
+
+## C.4
+
+
 # A1()
 # A2()
 # A4()
 # B2()
-C2()
+# C2()
+#C3()
