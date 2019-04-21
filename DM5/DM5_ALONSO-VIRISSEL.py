@@ -159,13 +159,25 @@ def Erreur(h, type):
 def C2():
     plt.figure("figure_C2")
     les_h = np.linspace(1e-3, 1e-2, 10)
+
     Expl = [Erreur(h, 'EulerExplicite') for h in les_h]
-    plt.plot(les_h, Expl, label="Euler Explicite")
+    plt.plot(les_h, Expl, 'bo', label="Euler Explicite")
+    p = np.polyfit(les_h, Expl, 1)  # Regression polynomiale d'ordre 2
+    Y = np.poly1d(p)
+    lbl = "Modèle Explicite : y = " + str(p[0]) + "X + " + str(p[1])
+    plt.plot(les_h, Y(les_h), 'r-', label=lbl)
+
     Impl = [Erreur(h, 'EulerImplicite') for h in les_h]
-    plt.plot(les_h, Impl, label="Euler Implicite")
+    plt.plot(les_h, Impl, 'go', label="Euler Implicite")
+    p = np.polyfit(les_h, Impl, 1)  # Regression polynomiale d'ordre 2
+    Y = np.poly1d(p)
+    lbl = "Modèle Implicite : y = " + str(p[0]) + "X + " + str(p[1])
+    plt.plot(les_h, Y(les_h), 'm-', label=lbl)
 
     plt.legend()
     plt.savefig("figure_C2.pdf")
+
+    # Les 2 epsilon admettent un modèle affine et sont donc des O(h)
 
 ## C.3
 
@@ -220,6 +232,6 @@ def C4():
 # A2()
 # A4()
 # B2()
-# C2()
+C2()
 # C3()
-C4()
+# C4()
