@@ -3,11 +3,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import newton
+from time import perf_counter
 
 ## Constante :
 
 alpha = -30
 y0 = 10
+
 
 ## A.1
 
@@ -31,6 +33,7 @@ def EulerExplicite(F, a, b, y0, h):
         les_y.append(y)
     return les_t, les_y
 
+
 def A1():
     X = np.linspace(0, 5, 200)
     Y = [Solution(t) for t in X]
@@ -43,7 +46,8 @@ def A1():
 def A2():
     plt.figure("figure_A2", figsize=[14.2, 8])
     
-    # Comme c'est pas noté, petite entorce à la consigne pour que ce soit plus clair (il y a plus de graphique que demander)
+    # Comme c'est pas noté, petite entorce à la consigne pour que ce soit plus clair (il y a plus de graphique que
+    # demandé)
     for i in range(10, 0, -1):
         X, Y = EulerExplicite(F, 0, 5, y0, i/100)
         plt.subplot(2, 5, 11-i)
@@ -69,6 +73,7 @@ def A2():
 # {y(tk)} converge vers 0 si 1 - 30*h > 0 i.e h < 1/30
 hmin = 1/30
 
+
 def A4():
     plt.figure("figure_A4", figsize=[14.2, 8])
     
@@ -93,11 +98,11 @@ def A4():
     plt.savefig("figure_A4.pdf")
 
 
+
 ## B.1
 
 # newton(func, x0) Résoue une équation du type func(x) = 0 par une méthode approchée de la méthode de Newton en partant
 # de x0
-
 
 def EulerImplicite(F, a, b, y0, h):
     t = a
@@ -105,7 +110,7 @@ def EulerImplicite(F, a, b, y0, h):
     les_t = [a]
     les_y = [y0]
     while t + h <= b:
-        y = newton(lambda Y: Y - y - h*F(t, Y), y)
+        y = newton(lambda Y: Y - y - h*F(t, Y), y)  # Très long à éxécuter
         t = t + h
         les_t.append(t)
         les_y.append(y)
@@ -154,6 +159,7 @@ def Erreur(h, type):
     yvrai = [Solution(t) for t in les_tk]
     return np.max([np.abs(yvrai[k] - ynum[k]) for k in range(len(les_tk))])
 
+
 ## C.2
 
 def C2():
@@ -179,6 +185,7 @@ def C2():
 
     # Les 2 epsilon admettent un modèle affine et sont donc des O(h)
 
+
 ## C.3
 
 def EulerHeun(F, a, b, y0, h):
@@ -200,6 +207,7 @@ def C3():
     plt.plot(X, Y)
     plt.title("Résolution par la méthode de Heun")
     plt.savefig("figure_C3.pdf")
+
 
 ## C.4
 
@@ -224,14 +232,66 @@ def C4():
     # Epsilon peut s'exprimer comme un polynome de degré 2. Par conséquent, Epsilon = O(h**2)
 
 
-
 ## D.1
 
+def complexite(n):
+    """Renvoie les temps d'exécution de chaque méthode comme suit : tps Expl, tps Impl, tps Heun"""
+    h = (5 - 0)/n
 
-# A1()
-# A2()
-# A4()
-# B2()
+    t0 = perf_counter()
+    EulerExplicite(F, 0, 5, y0, h)
+    t1 = perf_counter()
+    tps_Expl = t1 - t0
+
+    t0 = perf_counter()
+    EulerImplicite(F, 0, 5, y0, h)
+    t1 = perf_counter()
+    tps_Impl = t1 - t0
+
+    t0 = perf_counter()
+    EulerHeun(F, 0, 5, y0, h)
+    t1 = perf_counter()
+    tps_Heun = t1 - t0
+
+    return tps_Expl, tps_Impl, tps_Heun
+
+## D.2
+
+def D2():
+    """/!\\ Méthode très longue !! ~15s"""
+    Y1, Y2, Y3 = [], [], []
+    X = [i for i in range(1000, 20001, 1000)]
+    for x in [complexite(j) for j in X]:
+        y1, y2, y3 = x
+        Y1.append(y1)
+        Y2.append(y2)
+        Y3.append(y3)
+
+    plt.figure("figure_D2", figsize=[14.2, 8])
+
+    plt.subplot(131)
+    plt.title("Euler explcite, eps = O(h)")
+    plt.xlabel("Nombre points")
+    plt.ylabel("Temps de calcul en s")
+    plt.plot(X, Y1)
+    plt.subplot(132)
+    plt.title("Euler Implicite, eps = O(h)")
+    plt.xlabel("Nombre points")
+    plt.ylabel("Temps de calcul en s")
+    plt.plot(X, Y2)
+    plt.subplot(133)
+    plt.title("Euler Heun, eps = O(h**2)")
+    plt.xlabel("Nombre points")
+    plt.ylabel("Temps de calcul en s")
+    plt.plot(X, Y3)
+    plt.savefig("figure_D2.pdf")
+
+
+A1()
+A2()
+A4()
+B2()
 C2()
-# C3()
-# C4()
+C3()
+C4()
+D2()
