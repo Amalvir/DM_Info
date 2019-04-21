@@ -1,9 +1,11 @@
 # ALONSO-VIRISSEL Sam DM 5
 
+# Si vous avez des questions, hésitez pas. J'ai du demandé à Mme Long pour la complexité notamment, je vous réexplique.
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import newton
-from time import perf_counter
+from time import perf_counter  # Remplace clock en 3.8
 
 ## Constante :
 
@@ -14,14 +16,17 @@ y0 = 10
 ## A.1
 
 def Solution(t):
+    """Solution trouvé par résolution mathématique d'équa diff (chap 4)"""
     return y0*np.exp(alpha*t)
 
 
 def F(t, y):
+    """Retorune y' = alpha*y"""
     return alpha*y
 
 
 def EulerExplicite(F, a, b, y0, h):
+    """Méthode d'Euler vu en cours"""
     t = a
     y = y0
     les_t = [a]
@@ -35,6 +40,7 @@ def EulerExplicite(F, a, b, y0, h):
 
 
 def A1():
+    """Ce qui est demandé à la question A.1"""
     X = np.linspace(0, 5, 200)
     Y = [Solution(t) for t in X]
     plt.figure("figure_A1")
@@ -44,7 +50,8 @@ def A1():
 ## A.2
 
 def A2():
-    plt.figure("figure_A2", figsize=[14.2, 8])
+    """Ce qui est demandé à la question A.2"""
+    plt.figure("figure_A2", figsize=[14.2, 8])  # Permet d'enregistrer en plus grand sinon on voit rien sur le pdf
     
     # Comme c'est pas noté, petite entorce à la consigne pour que ce soit plus clair (il y a plus de graphique que
     # demandé)
@@ -75,6 +82,7 @@ hmin = 1/30
 
 
 def A4():
+    """Ce qui est demandé à la question A.4"""
     plt.figure("figure_A4", figsize=[14.2, 8])
     
     X, Y = EulerExplicite(F, 0, 5, y0, hmin-0.01)
@@ -105,6 +113,7 @@ def A4():
 # de x0
 
 def EulerImplicite(F, a, b, y0, h):
+    """Méthode d'Euler Implicite. Bien trop longue à exécuter pour son interêt"""
     t = a
     y = y0
     les_t = [a]
@@ -120,9 +129,10 @@ def EulerImplicite(F, a, b, y0, h):
 ## B.2
 
 def B2():
+    """Ce qui est demandé à la question B.2"""
     plt.figure("figure_B2", figsize=[14.2, 8])
 
-# Dure de faire quelque chose de clair cette fois vu qu'il n'y a que peu de difference
+    # Dure de faire quelque chose de clair cette fois vu qu'il n'y a que peu de difference
     for i in range(1, 11):
         X, Y = EulerImplicite(F, 0, 5, y0, i/100)
         plt.subplot(2, 5, i)
@@ -148,6 +158,7 @@ def B2():
 ## C.1
 
 def Erreur(h, type):
+    """Renvoie l'écart par rapport à la valeur exacte (Solution(t)) en fonction du pas h et du type de résolutio """
     if type == "EulerExplicite":
         les_tk, ynum = EulerExplicite(F, 0, 5, y0, h)
     elif type == "EulerImplicite":
@@ -155,6 +166,7 @@ def Erreur(h, type):
     elif type == 'EulerHeun':
         les_tk, ynum = EulerHeun(F, 0, 5, y0, h)
     else:
+        # Lève une erreur si le mauvais type est renseigné
         raise ValueError("'EulerExplicite', 'EulerImplicite' ou 'EulerHeun' attendu")
     yvrai = [Solution(t) for t in les_tk]
     return np.max([np.abs(yvrai[k] - ynum[k]) for k in range(len(les_tk))])
@@ -163,7 +175,8 @@ def Erreur(h, type):
 ## C.2
 
 def C2():
-    plt.figure("figure_C2")
+    """Ce qui est demandé à la question C.2"""
+    plt.figure("figure_C2", figsize=[14.2, 8])
     les_h = np.linspace(1e-3, 1e-2, 10)
 
     Expl = [Erreur(h, 'EulerExplicite') for h in les_h]
@@ -175,7 +188,7 @@ def C2():
 
     Impl = [Erreur(h, 'EulerImplicite') for h in les_h]
     plt.plot(les_h, Impl, 'go', label="Euler Implicite")
-    p = np.polyfit(les_h, Impl, 1)  # Regression polynomiale d'ordre 2
+    p = np.polyfit(les_h, Impl, 1)  # Regression polynomiale d'ordre 1
     Y = np.poly1d(p)
     lbl = "Modèle Implicite : y = " + str(p[0]) + "X + " + str(p[1])
     plt.plot(les_h, Y(les_h), 'm-', label=lbl)
@@ -189,6 +202,7 @@ def C2():
 ## C.3
 
 def EulerHeun(F, a, b, y0, h):
+    """Méthode d'Euler Heun. Plutôt rapide mais erreur croissante en O(h**2) donc utiliser des petits pas"""
     t = a
     y = y0
     les_t = [a]
@@ -202,6 +216,7 @@ def EulerHeun(F, a, b, y0, h):
     return les_t, les_y
 
 def C3():
+    """Ce qui est demandé à la question C.3"""
     plt.figure("figure_C3")
     X, Y = EulerHeun(F, 0, 5, y0, 0.01)
     plt.plot(X, Y)
@@ -212,13 +227,14 @@ def C3():
 ## C.4
 
 def C4():
+    """Ce qui est demandé à la question C.4"""
     plt.figure("figure_C4", figsize=[14.2, 8])
 
     les_h = np.linspace(1e-3, 1e-2, 10)
     Heun = [Erreur(h, 'EulerHeun') for h in les_h]
 
     p = np.polyfit(les_h, Heun, 2)  # Regression polynomiale d'ordre 2
-    Y = np.poly1d(p)
+    Y = np.poly1d(p)  # Crée un polynôme avec les carac de p
 
     plt.plot(les_h, Heun, 'bo', label="Epsilon par la méthode de Heun")
 
