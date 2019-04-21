@@ -147,8 +147,10 @@ def Erreur(h, type):
         les_tk, ynum = EulerExplicite(F, 0, 5, y0, h)
     elif type == "EulerImplicite":
         les_tk, ynum = EulerImplicite(F, 0, 5, y0, h)
+    elif type == 'EulerHeun':
+        les_tk, ynum = EulerHeun(F, 0, 5, y0, h)
     else:
-        raise ValueError("'EulerExplicite' ou 'EulerImplicite' attendu")
+        raise ValueError("'EulerExplicite', 'EulerImplicite' ou 'EulerHeun' attendu")
     yvrai = [Solution(t) for t in les_tk]
     return np.max([np.abs(yvrai[k] - ynum[k]) for k in range(len(les_tk))])
 
@@ -189,10 +191,24 @@ def C3():
 
 ## C.4
 
+def C4():
+    plt.figure("figure_C4")
+    les_h = np.linspace(1e-3, 1e-2, 10)
+    Heun = [Erreur(h, 'EulerHeun') for h in les_h]
+    plt.plot(les_h, Heun, label="Euler Heun")
+    Heunh = [Erreur(h, 'EulerHeun')/h**2 for h in les_h]
+    plt.plot(les_h, Heunh, label="Euler Heun / h**2")
+    plt.legend()
+    plt.show()
+
+
+## D.1
+
 
 # A1()
 # A2()
 # A4()
 # B2()
 # C2()
-#C3()
+# C3()
+C4()
