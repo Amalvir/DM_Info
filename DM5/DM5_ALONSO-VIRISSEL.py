@@ -192,14 +192,25 @@ def C3():
 ## C.4
 
 def C4():
-    plt.figure("figure_C4")
+    plt.figure("figure_C4", figsize=[14.2, 8])
+
     les_h = np.linspace(1e-3, 1e-2, 10)
     Heun = [Erreur(h, 'EulerHeun') for h in les_h]
-    plt.plot(les_h, Heun, label="Euler Heun")
-    Heunh = [Erreur(h, 'EulerHeun')/h**2 for h in les_h]
-    plt.plot(les_h, Heunh, label="Euler Heun / h**2")
+
+    p = np.polyfit(les_h, Heun, 2)  # Regression polynomiale d'ordre 2
+    Y = np.poly1d(p)
+
+    plt.plot(les_h, Heun, 'bo', label="Epsilon par la méthode de Heun")
+
+    lbl = "Modèle : y = "+str(p[0])+"X**2 + "+str(p[1])+"X + "+str(p[2])
+    plt.plot(les_h, Y(les_h), 'r-', label=lbl)
+
     plt.legend()
-    plt.show()
+    plt.title("Résolution par la méthode de Heun")
+    plt.savefig("figure_C4.pdf")
+
+    # Epsilon peut s'exprimer comme un polynome de degré 2. Par conséquent, Epsilon = O(h**2)
+
 
 
 ## D.1
