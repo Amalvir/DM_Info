@@ -77,8 +77,8 @@ def A2():
 ## A.4
 
 # Rappel : y(tk+1) = y(tk)*(1 - 30*h)
-# {y(tk)} converge vers 0 si 1 - 30*h > 0 i.e h < 1/30
-hmin = 1/30
+# {y(tk)} converge vers 0 si 1 - 30*h > -1 i.e h < 2/30
+hmin = 2/30
 
 
 def A4():
