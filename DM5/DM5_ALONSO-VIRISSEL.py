@@ -53,7 +53,7 @@ def A2():
     """Ce qui est demandé à la question A.2"""
     plt.figure("figure_A2", figsize=[14.2, 8])  # Permet d'enregistrer en plus grand sinon on voit rien sur le pdf
     
-    # Comme c'est pas noté, petite entorce à la consigne pour que ce soit plus clair (il y a plus de graphique que
+    # Comme c'est pas noté, petite entorse à la consigne pour que ce soit plus clair (il y a plus de graphique que
     # demandé)
     for i in range(10, 0, -1):
         X, Y = EulerExplicite(F, 0, 5, y0, i/100)
