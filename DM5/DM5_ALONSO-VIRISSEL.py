@@ -1,6 +1,7 @@
 # ALONSO-VIRISSEL Sam DM 5
 
-# Si vous avez des questions, hésitez pas. J'ai du demandé à Mme Long pour la complexité notamment, je vous réexplique.
+# Si vous avez des questions, n'hésitez pas. J'ai du demander à Mme Long pour la complexité notamment,
+# je vous réexplique si jamais
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,7 +17,7 @@ y0 = 10
 ## A.1
 
 def Solution(t):
-    """Solution trouvé par résolution mathématique d'équa diff (chap 4)"""
+    """Solution trouvée par résolution mathématique d'équa diff (chap 4)"""
     return y0*np.exp(alpha*t)
 
 
@@ -45,6 +46,9 @@ def A1():
     Y = [Solution(t) for t in X]
     plt.figure("figure_A1")
     plt.plot(X, Y)
+    plt.xlabel("t")
+    plt.ylabel("Solution(t)")
+    plt.title("Solution exacte de l'équa diff")
     plt.savefig("figure_A1.pdf")
 
 ## A.2
@@ -53,13 +57,13 @@ def A2():
     """Ce qui est demandé à la question A.2"""
     plt.figure("figure_A2", figsize=[14.2, 8])  # Permet d'enregistrer en plus grand sinon on voit rien sur le pdf
     
-    # Comme c'est pas noté, petite entorse à la consigne pour que ce soit plus clair (il y a plus de graphique que
+    # Comme ce n'est pas noté, petite entorse à la consigne pour que ce soit plus clair (il y a plus de graphique que
     # demandé)
     for i in range(10, 0, -1):
         X, Y = EulerExplicite(F, 0, 5, y0, i/100)
         plt.subplot(2, 5, 11-i)
         plt.plot(X, Y, label="pas = "+str(i/100))
-        plt.title("Pas = "+str(i/100))
+        plt.title("Explicite : pas = "+str(i/100))
         plt.legend()
     
     plt.savefig("figure_A2.pdf")
@@ -89,19 +93,25 @@ def A4():
     plt.subplot(131)
     plt.plot(X, Y, label="pas = hmin - 0.01")
     plt.legend()
-    plt.title("Pas = hmin - 0,01")
+    plt.xlabel("t")
+    plt.ylabel("y(t)")
+    plt.title("Etude du pas limite")
     
     X, Y = EulerExplicite(F, 0, 5, y0, hmin)
     plt.subplot(132)
     plt.plot(X, Y, label="pas = hmin")
     plt.legend()
-    plt.title("Pas = hmin")
+    plt.xlabel("t")
+    plt.ylabel("y(t)")
+    plt.title("Etude du pas limite")
     
     X, Y = EulerExplicite(F, 0, 5, y0, hmin+0.01)
     plt.subplot(133)
     plt.plot(X, Y, label="pas = hmin + 0.01")
     plt.legend()
-    plt.title("Pas = hmin + 0,01")
+    plt.xlabel("t")
+    plt.ylabel("y(t)")
+    plt.title("Etude du pas limite")
     
     plt.savefig("figure_A4.pdf")
 
@@ -137,7 +147,7 @@ def B2():
         X, Y = EulerImplicite(F, 0, 5, y0, i/100)
         plt.subplot(2, 5, i)
         plt.plot(X, Y, label="pas = "+str(i/100))
-        plt.title("Pas = "+str(i/100))
+        plt.title("Implicite : pas = "+str(i/100))
         plt.legend()
 
     plt.savefig("figure_B2.pdf")
@@ -158,7 +168,7 @@ def B2():
 ## C.1
 
 def Erreur(h, type):
-    """Renvoie l'écart par rapport à la valeur exacte (Solution(t)) en fonction du pas h et du type de résolutio """
+    """Renvoie l'écart par rapport à la valeur exacte (Solution(t)) en fonction du pas h et du type de résolution"""
     if type == "EulerExplicite":
         les_tk, ynum = EulerExplicite(F, 0, 5, y0, h)
     elif type == "EulerImplicite":
@@ -194,6 +204,9 @@ def C2():
     plt.plot(les_h, Y(les_h), 'm-', label=lbl)
 
     plt.legend()
+    plt.title("Etude de la convergence des erreurs")
+    plt.xlabel("pas")
+    plt.ylabel("Epsilon")
     plt.savefig("figure_C2.pdf")
 
     # Les 2 epsilon admettent un modèle affine et sont donc des O(h)
@@ -221,6 +234,8 @@ def C3():
     X, Y = EulerHeun(F, 0, 5, y0, 0.01)
     plt.plot(X, Y)
     plt.title("Résolution par la méthode de Heun")
+    plt.xlabel("t")
+    plt.ylabel("y(t)")
     plt.savefig("figure_C3.pdf")
 
 
@@ -242,7 +257,9 @@ def C4():
     plt.plot(les_h, Y(les_h), 'r-', label=lbl)
 
     plt.legend()
-    plt.title("Résolution par la méthode de Heun")
+    plt.title("Etude de l'erreur par la méthode de Heun")
+    plt.xlabel("pas")
+    plt.ylabel("epsilon")
     plt.savefig("figure_C4.pdf")
 
     # Epsilon peut s'exprimer comme un polynome de degré 2. Par conséquent, Epsilon = O(h**2)
