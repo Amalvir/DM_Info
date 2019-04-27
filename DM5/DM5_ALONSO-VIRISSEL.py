@@ -63,9 +63,9 @@ def A2():
         X, Y = EulerExplicite(F, 0, 5, y0, i/100)
         plt.subplot(2, 5, 11-i)
         plt.plot(X, Y, label="pas = "+str(i/100))
-        plt.title("Explicite : pas = "+str(i/100))
         plt.legend()
-    
+    plt.subplot(2, 5, 8)
+    plt.title("Explicite : Comparaison de pas")
     plt.savefig("figure_A2.pdf")
 
 # On remarque l'apparition d'une sinusoide. En diminuant le pas la sinusoide évolue; elle se retrouve au début puis
@@ -147,9 +147,10 @@ def B2():
         X, Y = EulerImplicite(F, 0, 5, y0, i/100)
         plt.subplot(2, 5, i)
         plt.plot(X, Y, label="pas = "+str(i/100))
-        plt.title("Implicite : pas = "+str(i/100))
         plt.legend()
 
+    plt.subplot(2, 5, 8)
+    plt.title("Implicite : Comparaison de pas")
     plt.savefig("figure_B2.pdf")
 
 # On remarque que le résultat est celui estompé et que si l'on augmente le pas cela ne fait que diminuer la qualité de
