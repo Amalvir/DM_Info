@@ -1,7 +1,7 @@
 # ALONSO-VIRISSEL Sam DM 5
 
-# Si vous avez des questions, n'hésitez pas. J'ai du demander à Mme Long pour la complexité notamment,
-# je vous réexplique si jamais
+# Si vous avez des questions, n'hésitez pas. J'ai du demander à Mme Long pour la
+# complexité notamment, je vous réexplique si jamais.
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,8 +21,8 @@ def Solution(t):
     return y0*np.exp(alpha*t)
 
 
-def F(t, y):
-    """Retorune y' = alpha*y"""
+def F(y, t):    # J'avais pas mis t et y comme dans l'énoncé...
+    """Retourne y' = alpha*y"""
     return alpha*y
 
 
@@ -33,7 +33,7 @@ def EulerExplicite(F, a, b, y0, h):
     les_t = [a]
     les_y = [y0]
     while t + h <= b:
-        y = y + h*F(t, y)
+        y = y + h*F(y, t)
         t = t + h
         les_t.append(t)
         les_y.append(y)
@@ -55,9 +55,11 @@ def A1():
 
 def A2():
     """Ce qui est demandé à la question A.2"""
-    plt.figure("figure_A2", figsize=[14.2, 8])  # Permet d'enregistrer en plus grand sinon on voit rien sur le pdf
+    plt.figure("figure_A2", figsize=[14.2, 8])  # Permet d'enregistrer en plus grand
+    # sinon on voit rien sur le pdf
     
-    # Comme ce n'est pas noté, petite entorse à la consigne pour que ce soit plus clair (il y a plus de graphique que
+    # Comme ce n'est pas noté, petite entorse à la consigne pour que ce soit plus
+    # clair (il y a plus de graphiques que
     # demandé)
     for i in range(10, 0, -1):
         X, Y = EulerExplicite(F, 0, 5, y0, i/100)
@@ -68,15 +70,17 @@ def A2():
     plt.title("Explicite : Comparaison de pas")
     plt.savefig("figure_A2.pdf")
 
-# On remarque l'apparition d'une sinusoide. En diminuant le pas la sinusoide évolue; elle se retrouve au début puis
-# disparait. (On remarque qu'elle est très jolie pour h = 0.07 !)
+# Les points alternent entre positifs et négatif. En diminuant le pas la sinusoïde
+# évolue; elle se retrouve au début puis disparait. (On remarque qu'elle est très
+# jolie pour h = 0.07 !)
 
 ## A.3
 
 # F(ytk, tk) = alpha*ytk
 # D'où, y(tk+1) = y(tk)*(1 + alpha*h) = -2*y(tk)
-# Dans le cas où alpha = -30 et h = 0,1; la suite {y(tk)} est une suite géométrique de raison négative inférieur à -1.
-# Par conséquent, ses valeurs sont tantôt positive, tantôt négative ce qui conduit à cette divergence.
+# Dans le cas où alpha = -30 et h = 0,1; la suite {y(tk)} est une suite géométrique
+# de raison négative inférieur à -1. Par conséquent, ses valeurs sont tantôt positive,
+# tantôt négative ce qui conduit à cette divergence.
 
 ## A.4
 
@@ -119,17 +123,18 @@ def A4():
 
 ## B.1
 
-# newton(func, x0) Résoue une équation du type func(x) = 0 par une méthode approchée de la méthode de Newton en partant
+# newton(func, x0) Résout une équation du type func(x) = 0 par une méthode approchée
+# de la méthode de Newton en partant
 # de x0
 
 def EulerImplicite(F, a, b, y0, h):
-    """Méthode d'Euler Implicite. Bien trop longue à exécuter pour son interêt"""
+    """Méthode d'Euler Implicite. Bien trop longue à exécuter pour son intérêt"""
     t = a
     y = y0
     les_t = [a]
     les_y = [y0]
     while t + h <= b:
-        y = newton(lambda Y: Y - y - h*F(t, Y), y)  # Très long à éxécuter
+        y = newton(lambda Y: Y - y - h*F(Y, t), y)  # Très long à éxécuter
         t = t + h
         les_t.append(t)
         les_y.append(y)
@@ -142,7 +147,8 @@ def B2():
     """Ce qui est demandé à la question B.2"""
     plt.figure("figure_B2", figsize=[14.2, 8])
 
-    # Dure de faire quelque chose de clair cette fois vu qu'il n'y a que peu de difference
+    # Dure de faire quelque chose de clair cette fois vu qu'il n'y a que peu de
+    # difference
     for i in range(1, 11):
         X, Y = EulerImplicite(F, 0, 5, y0, i/100)
         plt.subplot(2, 5, i)
@@ -153,23 +159,26 @@ def B2():
     plt.title("Implicite : Comparaison de pas")
     plt.savefig("figure_B2.pdf")
 
-# On remarque que le résultat est celui estompé et que si l'on augmente le pas cela ne fait que diminuer la qualité de
+# On remarque que le résultat est celui escompté et que si l'on augmente le pas cela
+# ne fait que diminuer la qualité de
 # la courbe
 
 ## B.3
 
 # F(y(tk+1), tk+1) = alpha*ytk+1
 # D'où, y(tk+1) = y(tk)/(1 - alpha*h)
-# Dans le cas où alpha = -30 et h = 0,1; la suite {y(tk)} est une suite géométrique de raison comprise entre 1 et -1.
-# Par conséquent, cette suite converge vers 0 et la méthode implicite est stable. Néanmoins, le cas où alpha*h = 1 peut
-# poser problème. Seulement, dans le cas présent alpha est négatif et comme h ne peut être négatif, alpha*h ne peut être
-# égale à 1.
+# Dans le cas où alpha = -30 et h = 0,1; la suite {y(tk)} est une suite géométrique de
+# raison comprise entre 1 et -1. Par conséquent, cette suite converge vers 0 et la
+# méthode implicite est stable. Néanmoins, le cas où alpha*h = 1 peut poser problème.
+# Seulement, dans le cas présent alpha est négatif et comme h ne peut être négatif,
+# alpha*h ne peut être égal à 1.
 
 
 ## C.1
 
 def Erreur(h, type):
-    """Renvoie l'écart par rapport à la valeur exacte (Solution(t)) en fonction du pas h et du type de résolution"""
+    """Renvoie l'écart par rapport à la valeur exacte (Solution(t)) en fonction du pas
+     h et du type de résolution"""
     if type == "EulerExplicite":
         les_tk, ynum = EulerExplicite(F, 0, 5, y0, h)
     elif type == "EulerImplicite":
@@ -210,20 +219,22 @@ def C2():
     plt.ylabel("Epsilon")
     plt.savefig("figure_C2.pdf")
 
-    # Les 2 epsilon admettent un modèle affine et sont donc des O(h)
+    # Les 2 epsilon admettent un modèle affine et sont donc des O(h). Attention à la
+    # constante : si c(h) = ah+b avec b != 0, c(h) = O(1) et pas O(h)
 
 
 ## C.3
 
 def EulerHeun(F, a, b, y0, h):
-    """Méthode d'Euler Heun. Plutôt rapide mais erreur croissante en O(h**2) donc utiliser des petits pas"""
+    """Méthode d'Euler Heun. Plutôt rapide mais erreur croissante en O(h**2) donc
+    utiliser des petits pas"""
     t = a
     y = y0
     les_t = [a]
     les_y = [y0]
     while t + h <= b:
         yp = y + h*F(t, y)
-        y = y + h/2*(F(t, y) + F(t+h, yp))
+        y = y + h/2*(F(y, t) + F(yp, t+h))
         t = t + h
         les_t.append(t)
         les_y.append(y)
@@ -263,13 +274,15 @@ def C4():
     plt.ylabel("epsilon")
     plt.savefig("figure_C4.pdf")
 
-    # Epsilon peut s'exprimer comme un polynome de degré 2. Par conséquent, Epsilon = O(h**2)
+# Epsilon peut s'exprimer comme un polynôme de degré 2. Attention aux degrés 0 et 1
+# (ici "négligeable" devant celui de degré 2...?)
 
 
 ## D.1
 
 def complexite(n):
-    """Renvoie les temps d'exécution de chaque méthode comme suit : tps Expl, tps Impl, tps Heun"""
+    """Renvoie les temps d'exécution de chaque méthode comme suit :
+    tps Expl, tps Impl, tps Heun"""
     h = (5 - 0)/n
 
     t0 = perf_counter()
@@ -304,7 +317,7 @@ def D2():
     plt.figure("figure_D2", figsize=[14.2, 8])
 
     plt.subplot(131)
-    plt.title("Euler explcite, eps = O(h)")
+    plt.title("Euler explicite, eps = O(h)")
     plt.xlabel("Nombre points")
     plt.ylabel("Temps de calcul en s")
     plt.plot(X, Y1)
