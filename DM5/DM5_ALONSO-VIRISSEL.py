@@ -233,7 +233,7 @@ def EulerHeun(F, a, b, y0, h):
     les_t = [a]
     les_y = [y0]
     while t + h <= b:
-        yp = y + h*F(t, y)
+        yp = y + h*F(y, t)
         y = y + h/2*(F(y, t) + F(yp, t+h))
         t = t + h
         les_t.append(t)
